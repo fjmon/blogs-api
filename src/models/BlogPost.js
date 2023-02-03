@@ -1,13 +1,13 @@
 const BlogPostSchema = (sequelize, DataTypes) => {
   const BlogPostTable = sequelize.define('BlogPost', {
-    id: { 
-      type: DataTypes.INTEGER, 
-      primaryKey: true, 
-      autoIncrement: true 
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
     title: DataTypes.STRING,
     content: DataTypes.STRING,
-    user_id: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     published: DataTypes.DATE,
     updated: DataTypes.DATE
   }, {
@@ -21,5 +21,5 @@ const BlogPostSchema = (sequelize, DataTypes) => {
     })
   };
   return BlogPostTable
-  };
+};
 module.exports = BlogPostSchema
