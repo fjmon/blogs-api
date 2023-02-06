@@ -5,7 +5,10 @@ const addUser = async (req, res) => {
   const { displayName, email } = req.body;
   const { type, message } = await userService
     .addUser(req.body);
-  if (type) res.status(409).json({ message });
+  if (type) {
+ res.status(409)
+  .json({ message }); 
+}
 
   const token = geraToken({ displayName, email });
   res.status(201).json({ token });
@@ -26,7 +29,15 @@ const allUser = async (req, res) => {
     .json(await userService.allUser());
 };
 
+const idUser = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await userService.idUser(id);
+  if (type) return res.status(type).json({ message });
+  res.status(200).json(message);
+};
+
 module.exports = {
   addUser,
   allUser,
+  idUser,
 };
