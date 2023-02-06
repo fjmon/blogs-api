@@ -7,14 +7,23 @@ const jwtConfig = {
   algorithm: 'HS256',
   };
 
-const geraToken = (payload) => jwt.sign(payload, token, jwtConfig);
+const geraToken = (payload) => jwt
+.sign(payload, token, jwtConfig);
 
 const verifToken = (vtoken) => {
   try {
-    const user = jwt.verify(vtoken, token);
-    return { type: null, message: user };
+    const user = jwt
+    .verify(vtoken, token);
+    const userOK = { 
+      type: null, 
+      message: user, 
+    };
+    return userOK;
   } catch (error) {
-    return { type: 400, message: 'invalid token' };
+    return { 
+      type: 'TOKEN_INVALID', 
+      message: 'Expired or invalid token',
+    };
   }
 };
 
