@@ -7,13 +7,14 @@ const validateNewCategory = require(
 );
 const verifToken = require(
     '../utils/autorizador',
-    );
+);
 
 const router = Router();
 
-router.post('/', verifToken, 
-validateNewCategory, 
-categoryController.addCategory);
-router.get('', verifToken);
+router.post('/', verifToken,
+    validateNewCategory,
+    categoryController.addCategory);
+router.get('', verifToken,
+    categoryController.allCategories);
 
 module.exports = router;
