@@ -22,7 +22,7 @@ const addPost = async (req, res) => {
 };
 
 const posts = async (_req, res) => {
-  res.status(200).json(postService
+  res.status(200).json(await postService
     .posts());
 };
 
