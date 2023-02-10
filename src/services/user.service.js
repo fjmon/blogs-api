@@ -1,9 +1,18 @@
 const { User } = require('../models');
 
-const addUser = async (user) => ({
-  type: '',
-  message: (await User.create(user)),
-});
+const addUser = async (user) => {
+  try {
+    return {
+      type: '',
+      message: (await User.create(user)),
+    };
+  } catch (error) {
+    return {
+      type: 'USER_EXISTS',
+      message: 'User already registered',
+    };
+  }
+};
 
 const allUser = async () => User.findAll({
   attributes: { exclude: ['password'] },
