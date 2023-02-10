@@ -7,10 +7,12 @@ const CategorySchema = (sequelize, DataTypes) => {
     },
     name: DataTypes.STRING
   }, {
+    sequelize,
     tableName: 'categories',
     underscored: true,
     timestamps: false
   });
+  
   return CategoryTable
 };
 module.exports = CategorySchema

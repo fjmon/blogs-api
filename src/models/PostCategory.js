@@ -9,20 +9,23 @@ const PostCategorySchema = (sequelize, DataTypes) => {
       foreignKey: true
     },
   }, {
-      tableName: 'posts_categories',
-      underscored: true,
-      timestamps: false
-    });
+    sequelize,
+    tableName: 'posts_categories',
+    underscored: true,
+    timestamps: false
+  });
   PostCategoryTable.associate = (models) => {
     models.BlogPost.belongsToMany(models.Category, {
       through: PostCategoryTable,
-      foreignKey: 'post_id',
-      otherKey: 'category_id'
+      foreignKey: 'postId',
+      otherKey: 'categoryId',
+      as: 'categories'
     })
     models.Category.belongsToMany(models.BlogPost, {
       through: PostCategoryTable,
-      foreignKey: 'category_id',
-      otherKey: 'post_id'
+      foreignKey: 'categoryId',
+      otherKey: 'postId',
+      as: 'BlogPost'
     })
   }
   return PostCategoryTable
