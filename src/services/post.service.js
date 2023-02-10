@@ -44,11 +44,13 @@ const addPost = async ({
 
 const posts = async () => {
   const allPosts = await BlogPost.findAll(options);
-return allPosts;
+  return allPosts;
 };
 
-  const postById = async (id) => BlogPost
-  .findByPk(id, options);
+const postById = async (id) => {
+  const postId = await BlogPost.findByPk(id, options);
+  return postId;
+};
 
 module.exports = {
   addPost,

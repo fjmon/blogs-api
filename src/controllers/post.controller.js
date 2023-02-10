@@ -1,4 +1,6 @@
-const postService = require('../services/post.service');
+const postService = require(
+  '../services/post.service',
+);
 
 const addPost = async (req, res) => {
   const {
@@ -22,13 +24,22 @@ const addPost = async (req, res) => {
 };
 
 const posts = async (_req, res) => {
-  res.status(200).json(await postService
-    .posts());
+  res.status(200).json(
+    await postService
+      .posts(),
+  );
 };
 
 const postById = async (req, res) => {
-  res.status(200).json(await postService
-    .postById(req.params.id));
+  const postId = await postService
+    .postById(req.params.id);
+  if (postId) {
+    return res.status(200)
+      .json(postId);
+  }
+  res.status(404).json({
+    message: 'Post does not exist',
+  });
 };
 
 module.exports = {
