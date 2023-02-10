@@ -5,10 +5,7 @@ const addUser = async (req, res) => {
   const { displayName, email } = req.body;
   const { type, message } = await userService
     .addUser(req.body);
-  if (type) {
- res.status(409)
-  .json({ message }); 
-}
+  if (type) return res.status(409).json({ message }); 
 
   const token = geraToken({ displayName, email });
   res.status(201).json({ token });

@@ -6,17 +6,18 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       display_name: {
         allowNull: false,
-        field: 'display_name',
-        type: Sequelize.STRING
+     //   field: 'display_name',
+        type: Sequelize.STRING,
+        defaultValue: 'NewUser'
       },
       email: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
-        unique: true,
+        unique: true
       },
       password: {
         allowNull: false,

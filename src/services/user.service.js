@@ -1,10 +1,14 @@
 const { User } = require('../models');
-
-const addUser = async (user) => {
+// teste
+const addUser = async (body) => {
   try {
+    const result = await User.findOne({
+      where: { email: body.email },
+    });
+    if (result) throw new Error();
     return {
       type: '',
-      message: (await User.create(user)),
+      message: (await User.create(body)),
     };
   } catch (error) {
     return {
