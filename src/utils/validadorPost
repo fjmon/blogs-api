@@ -47,8 +47,17 @@ const validaUpPost = async (req, res, next) => {
     next();
 };
 
+const validaDelPost = async (req, res, next) => {
+    const { params: { id }, user } = req;
+    const post = await postService.postById(id);
+    if (!post) return res.status(404).json({ message: 'Post does not exist' });
+    if (post.user.id !== user.id) return res.status(401).json({ message: 'Unauthorized user' });
+    next();
+  };
+
 module.exports = {
     validaPost,
     validaUpPost,
+    validaDelPost,
 };
 // stop

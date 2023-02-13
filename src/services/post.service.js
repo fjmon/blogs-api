@@ -6,7 +6,7 @@ const {
   sequelize,
 } = require('../models');
 
-const options = {
+const alt = {
   include: [
     {
       model: User,
@@ -29,31 +29,31 @@ const options = {
 const addPost = async ({
   userId, title, content, categories,
 }) => {
-  const result = await sequelize
+  const response = await sequelize
     .transaction(async (taction) => {
-      const newPost = await BlogPost
+      const novaPost = await BlogPost
         .create({ title, content, userId },
           { transaction: taction });
       await Promise.all(categories
         .map(async (categoryId) => PostCategory
           .create({
-            postId: newPost.dataValues.id,
+            postId: novaPost.dataValues.id,
             categoryId,
           }, { transaction: taction })));
-      return newPost;
+      return novaPost;
     });
-  return result;
+  return response;
 };
 
 const posts = async () => {
   const allPosts = await BlogPost
-    .findAll(options);
+    .findAll(alt);
   return allPosts;
 };
 
 const postById = async (id) => {
   const postId = await BlogPost
-    .findByPk(id, options);
+    .findByPk(id, alt);
   return postId;
 };
 

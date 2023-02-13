@@ -33,8 +33,16 @@ const idUser = async (req, res) => {
   res.status(200).json(message);
 };
 
+const delUser = async (req, res) => {
+  const { user: { id: userId },
+  } = req;
+  await userService.delUser(userId);
+  res.status(204).end();
+};
+
 module.exports = {
   addUser,
   allUser,
   idUser,
+  delUser,
 };
