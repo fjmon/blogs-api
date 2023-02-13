@@ -1,9 +1,14 @@
 const categoryService = require(
     '../services/category.service',
 );
+const postService = require(
+    '../services/post.service',
+);
 
 const validaPost = async (req, res, next) => {
-    const { title, content, categoryIds } = req.body;
+    const {
+        title, content, categoryIds,
+    } = req.body;
     if (!title || !content || !categoryIds) {
         return res.status(400).json({
             message: 'Some required fields are missing',
@@ -21,6 +26,29 @@ const validaPost = async (req, res, next) => {
     next();
 };
 
+const validaUpPost = async (req, res, next) => {
+    const {
+        params: { id },
+        body: { title, content },
+        user,
+    } = req;
+    if (!title || !content) {
+        return res.status(400)
+            .json({
+                message: 'Some required fields are missing',
+            });
+    }
+    const post = await postService.postById(id);
+    if (post.user.id !== user.id) {
+        return res.status(401).json({
+            message: 'Unauthorized user',
+        });
+    }
+    next();
+};
+
 module.exports = {
     validaPost,
+    validaUpPost,
 };
+// stop

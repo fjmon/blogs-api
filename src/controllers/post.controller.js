@@ -42,9 +42,20 @@ const postById = async (req, res) => {
   });
 };
 
+const upPost = async (req, res) => {
+  const { params: { id }, body: { 
+    title, 
+    content, 
+  } } = req;
+  const updatedPost = await postService
+  .upPost({ id, title, content });
+  res.status(200).json(updatedPost);
+};
+
 module.exports = {
   addPost,
   posts,
   postById,
+  upPost,
 };
-// teste
+// STOP
