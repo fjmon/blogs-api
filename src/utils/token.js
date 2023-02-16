@@ -1,6 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
+const expira = 'Expired or invalid token';
 const token = process.env.JWT_SECRET;
 const jwtConfig = {
   expiresIn: '1d', 
@@ -22,7 +23,7 @@ const verifToken = (vtoken) => {
   } catch (error) {
     return { 
       type: 'TOKEN_INVALID', 
-      message: 'Expired or invalid token',
+      message: expira,
     };
   }
 };

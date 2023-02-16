@@ -1,11 +1,14 @@
 const { verifToken } = require('./token');
 const { User } = require('../models');
+// teste
+const unToken = 'Token not found';
+const unUser = 'User Not Found';
 
-module.exports = async (req, res, next) => {
+const autoriza = async (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) {
  return res.status(401)
-  .json({ message: 'Token not found' }); 
+  .json({ message: unToken }); 
 }  
   const { type, message } = verifToken(authorization);
   if (type) return res.status(401).json({ message });
@@ -17,8 +20,10 @@ module.exports = async (req, res, next) => {
     attributes: { exclude: ['password'] } });
   if (!user) {
  return res.status(400)
-  .json({ message: 'User Not Found' }); 
+  .json({ message: unUser }); 
 }
   req.user = user;    
   next();
 };
+
+module.exports = autoriza;

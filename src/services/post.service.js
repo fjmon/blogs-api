@@ -45,17 +45,11 @@ const addPost = async ({
   return response;
 };
 
-const posts = async () => {
-  const allPosts = await BlogPost
-    .findAll(alt);
-  return allPosts;
-};
+const posts = async () => BlogPost
+.findAll(alt);
 
-const postById = async (id) => {
-  const postId = await BlogPost
-    .findByPk(id, alt);
-  return postId;
-};
+const postById = async (id) => BlogPost
+.findByPk(id, alt);
 
 const upPost = async ({
   id,
@@ -65,15 +59,20 @@ const upPost = async ({
   await BlogPost
     .update({ title, content },
       { where: { id } });
-  const updatedPost = await postById(id);
-  return updatedPost;
+  return postById(id);
 };
+
+const delPostById = async (id) => BlogPost
+.destroy({
+    where: { id },
+  });
 
 module.exports = {
   addPost,
   posts,
   postById,
   upPost,
+  delPostById,
 };
 
 // STOP

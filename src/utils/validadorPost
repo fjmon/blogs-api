@@ -5,13 +5,18 @@ const postService = require(
     '../services/post.service',
 );
 
+const campos = 'Some required fields are missing';
+const desencontrado = 'one or more "categoryIds" not found';
+const desautorizado = 'Unauthorized user';
+const inexiste = 'Post does not exist';
+
 const validaPost = async (req, res, next) => {
     const {
         title, content, categoryIds,
     } = req.body;
-    if (!title || !content || !categoryIds) {
+    if (!title || !content) {
         return res.status(400).json({
-            message: 'Some required fields are missing',
+            message: campos,
         });
     }
     const verCategories = (await categoryService
@@ -20,7 +25,7 @@ const validaPost = async (req, res, next) => {
             .includes(category.id));
     if (!verCategories.every((category) => category)) {
         return res.status(400).json({
-            message: 'one or more "categoryIds" not found',
+            message: desencontrado,
         });
     }
     next();
@@ -35,13 +40,13 @@ const validaUpPost = async (req, res, next) => {
     if (!title || !content) {
         return res.status(400)
             .json({
-                message: 'Some required fields are missing',
+                message: campos,
             });
     }
     const post = await postService.postById(id);
     if (post.user.id !== user.id) {
         return res.status(401).json({
-            message: 'Unauthorized user',
+            message: desautorizado,
         });
     }
     next();
@@ -50,10 +55,18 @@ const validaUpPost = async (req, res, next) => {
 const validaDelPost = async (req, res, next) => {
     const { params: { id }, user } = req;
     const post = await postService.postById(id);
-    if (!post) return res.status(404).json({ message: 'Post does not exist' });
-    if (post.user.id !== user.id) return res.status(401).json({ message: 'Unauthorized user' });
+    if (!post) {
+        return res.status(404).json({
+            message: inexiste,
+        });
+    }
+    if (post.user.id !== user.id) {
+        return res.status(401).json({ 
+            message: desautorizado, 
+        });
+    }
     next();
-  };
+};
 
 module.exports = {
     validaPost,

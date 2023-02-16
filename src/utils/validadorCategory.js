@@ -12,7 +12,7 @@ const validaCategory = (body) => Joi
         name: nameVal,
     }).validate(body);
 
-module.exports = (req, res, next) => {
+const validaCat = (req, res, next) => {
     const { body } = req;
     const { error } = validaCategory(body);
     if (error) {
@@ -21,3 +21,5 @@ module.exports = (req, res, next) => {
     }
     next();
 };
+
+module.exports = validaCat;

@@ -2,6 +2,7 @@ const postService = require(
   '../services/post.service',
 );
 
+const inexiste = 'Post does not exist';
 const addPost = async (req, res) => {
   const {
     body: {
@@ -12,15 +13,16 @@ const addPost = async (req, res) => {
     user: { id: userId },
   } = req;
 
-  const newPost = await postService
+  const novoPost = await postService
     .addPost({
       title, content, categories, userId,
     });
-  if (newPost.type) {
-    return res.status(newPost.type)
-      .json({ message: newPost.message });
+  const { type, message } = novoPost;
+  if (type) {
+    return res.status(type)
+      .json({ message });
   }
-  res.status(201).json(newPost);
+  res.status(201).json(novoPost);
 };
 
 const posts = async (_req, res) => {
@@ -38,18 +40,24 @@ const postById = async (req, res) => {
       .json(postId);
   }
   res.status(404).json({
-    message: 'Post does not exist',
+    message: inexiste,
   });
 };
 
 const upPost = async (req, res) => {
-  const { params: { id }, body: { 
-    title, 
-    content, 
+  const { params: { id }, body: {
+    title,
+    content,
   } } = req;
   const updatedPost = await postService
-  .upPost({ id, title, content });
+    .upPost({ id, title, content });
   res.status(200).json(updatedPost);
+};
+
+const delPostById = async (req, res) => {
+  await postService
+    .delPostById(req.params.id);
+  res.status(204).end();
 };
 
 module.exports = {
@@ -57,5 +65,6 @@ module.exports = {
   posts,
   postById,
   upPost,
+  delPostById,
 };
 // STOP

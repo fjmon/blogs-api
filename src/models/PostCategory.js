@@ -19,13 +19,15 @@ const PostCategorySchema = (sequelize, DataTypes) => {
       through: PostCategoryTable,
       foreignKey: 'postId',
       otherKey: 'categoryId',
-      as: 'categories'
+      as: 'categories',
+      onDelete: 'cascade'
     })
     models.Category.belongsToMany(models.BlogPost, {
       through: PostCategoryTable,
       foreignKey: 'categoryId',
       otherKey: 'postId',
-      as: 'BlogPost'
+      as: 'BlogPost',
+      onDelete: 'cascade'
     })
   }
   return PostCategoryTable

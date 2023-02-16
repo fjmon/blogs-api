@@ -13,6 +13,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: "CASCADE",
         primaryKey: true,
+        onDelete: 'cascade',
       },
       category_id: {
         allowNull: false,

@@ -1,5 +1,8 @@
 const { User } = require('../models');
-// teste
+
+const existe = 'User already registered';
+const inexiste = 'User does not exist';
+
 const addUser = async (body) => {
   try {
     const result = await User.findOne({
@@ -13,11 +16,11 @@ const addUser = async (body) => {
   } catch (error) {
     return {
       type: 'USER_EXISTS',
-      message: 'User already registered',
+      message: existe,
     };
   }
 };
-
+//
 const allUser = async () => User.findAll({
   attributes: { exclude: ['password'] },
 });
@@ -29,7 +32,7 @@ const idUser = async (id) => {
   if (!user) {
     return {
       type: 404,
-      message: 'User does not exist',
+      message: inexiste,
     };
   }
   return { type: null, message: user };

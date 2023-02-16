@@ -18,10 +18,9 @@ const addCategory = async (req, res) => {
 };
 
 const allCategories = async (_req, res) => {
-    const users = await categoryService
-        .allCategories();
-
-    res.status(200).json(users);
+    res.status(200)
+    .json(await categoryService
+        .allCategories());
 };
 
 module.exports = {
